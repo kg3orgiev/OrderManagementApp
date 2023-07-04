@@ -1,25 +1,16 @@
 using Core.Entities;
-using Infrastructure.Data;
+using Core.Interfaces;
 
 namespace API.GraphQL
 {
     public class Query
     {
+        [UseProjection]
+        [UseFiltering]
+        public IQueryable<Customer> GetCustomers([Service] ICustomerService customerService) => customerService.GetCustomers();
        
-        [HotChocolate.Data.UseFirstOrDefault]
         [UseProjection]
-        [HotChocolate.Data.UseFiltering]
-        public IQueryable<Customer> GetCustomers([Service] OrderManagementContext context) {
-            context.Database.EnsureCreated();
-            return context.Customers;
-        } 
-        
-        [HotChocolate.Data.UseFirstOrDefault]
-        [UseProjection]
-        [HotChocolate.Data.UseFiltering]
-        public IQueryable<Order> GetOrders([Service] OrderManagementContext context){
-            context.Database.EnsureCreated();
-            return context.Orders;
-        } 
+        [UseFiltering]
+        public IQueryable<Order> GetOrders([Service] IOrderService orderService) => orderService.GetOrders();
     }
 }

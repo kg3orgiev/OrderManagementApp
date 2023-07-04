@@ -16,8 +16,9 @@ namespace Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Customer>().HasData(
-            new Customer{
+            modelBuilder.Entity<Customer>()
+            .HasQueryFilter(c=> !c.IsDeleted)
+            .HasData(new Customer{
                 Id = 1,
                 FirstName = "James",
                 LastName = "Bond",
@@ -54,8 +55,9 @@ namespace Infrastructure.Data
                 State = "LN"
             });
 
-            modelBuilder.Entity<Order>().HasData(
-            new Order{
+            modelBuilder.Entity<Order>()
+            .HasQueryFilter(o=> !o.IsDeleted)
+            .HasData(new Order {
                 Id = 1,
                 CustomerId = 1,
                 OrderDate =  DateTime.Now,
@@ -67,7 +69,7 @@ namespace Infrastructure.Data
                 Status = Core.Enums.Status.Pending,
                 OtherNotes = "Some Other Notes"
             },
-            new Order{
+              new Order{
                 Id = 2,
                 CustomerId = 2,
                 OrderDate =  DateTime.Now,
