@@ -1,0 +1,26 @@
+query GetCustomers{
+  customers {
+    id,
+    firstName,
+    lastName
+    contactNumber,
+    email,
+    address {
+      addressLine1,
+      addressLine2,
+      state,
+      city,
+      country
+    },
+    orders {
+      id,
+      orderDate,
+      descriptions,
+      totalAmount,
+      depositAmount,
+      isDelivery,
+      status,
+      otherNotes     
+    }
+  }
+}

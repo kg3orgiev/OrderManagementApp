@@ -18,7 +18,7 @@ builder.Services.AddCors(options =>
                       builder =>
                       {
                           builder
-                          .WithOrigins("https://localhost", "http://localhost")
+                          .SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
                           .AllowAnyMethod()
                           .AllowAnyHeader();
                       });
