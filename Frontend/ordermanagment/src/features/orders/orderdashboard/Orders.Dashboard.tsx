@@ -1,32 +1,32 @@
 import { Grid, Typography} from '@mui/material';
-import { Customer, useGetCustomersQuery } from '../../../graphql/generated/schema'
-import CustomerList from './CustomerList';
+import { Order, useGetOrdersQuery } from '../../../graphql/generated/schema'
+import OrderLists from '../OrderList';
 
-export default function CustomerDashboard() {
+export default function OrdersDashboard() {
 
-    const { data:customersData, loading, error } = useGetCustomersQuery();
+    const { data:ordersData, loading, error } = useGetOrdersQuery();
 
     if(loading)
     {
         return <div>Loading... </div>
     }
 
-    if(error || !customersData)
+    if(error || !ordersData)
     {
         return <div>Error... </div>
     }
 
- var customers = customersData.customers as Customer[]
+ var orders = ordersData.orders as Order[]
 
     return (
         <Grid container spacing={2} >
             <Grid item xs={11}>
                 <Typography align='center' gutterBottom display={'block'} variant='h5' component={'div'} >
-                 Customer List
+                 Orders List
                 </Typography>
             </Grid>
             <Grid item xs={11}>
-                <CustomerList customers={customers} />
+                <OrderLists orders={orders} />
             </Grid>
         </Grid>
     )

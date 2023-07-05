@@ -1,0 +1,17 @@
+query GetOrders{
+  orders {
+    id,
+    customerId,
+    customer {
+      firstName,
+      lastName
+    },
+    status,
+    orderDate,
+    descriptions,
+    isDelivery,
+    totalAmount,
+    depositAmount,
+    isDelivery
+  } 
+}
