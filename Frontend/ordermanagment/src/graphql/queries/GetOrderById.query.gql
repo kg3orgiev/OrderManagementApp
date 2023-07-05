@@ -1,0 +1,17 @@
+query GetOrderById($id: Int!){
+  orders(where: {id : {eq: $id}} ) {
+    id,
+    customerId,
+    customer {
+      firstName,
+      lastName
+    },
+    status,
+    orderDate,
+    descriptions,
+    isDelivery,
+    totalAmount,
+    depositAmount,
+    isDelivery
+  } 
+}

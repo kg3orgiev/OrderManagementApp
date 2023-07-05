@@ -1,0 +1,26 @@
+query GetCustomerById($id: Int!){
+  customers(where: {id : {eq: $id}} ) {
+    id,
+    firstName,
+    lastName
+    contactNumber,
+    email,
+    address {
+      addressLine1,
+      addressLine2,
+      state,
+      city,
+      country
+    },
+    orders {
+      id,
+      orderDate,
+      descriptions,
+      totalAmount,
+      depositAmount,
+      isDelivery,
+      status,
+      otherNotes     
+    }
+  }
+}
