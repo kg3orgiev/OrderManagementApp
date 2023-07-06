@@ -1,6 +1,6 @@
 import { Grid, Typography} from '@mui/material';
 import { Order, useGetOrdersQuery } from '../../../graphql/generated/schema'
-import OrderLists from '../OrderList';
+import OrderLists from './OrderList';
 import OmLoading from '../../../components/elements/OmLoading';
 import OmAlert from '../../../components/elements/OmAlert';
 

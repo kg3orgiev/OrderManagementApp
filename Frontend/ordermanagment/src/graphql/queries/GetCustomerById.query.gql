@@ -20,7 +20,11 @@ query GetCustomerById($id: Int!){
       depositAmount,
       isDelivery,
       status,
-      otherNotes     
+      otherNotes,
+      customer {
+        firstName,
+        lastName
+      },   
     }
   }
 }

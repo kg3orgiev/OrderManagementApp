@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useParams,useNavigate } from "react-router-dom";
-import { Customer, useGetCustomerByIdQuery } from "../../graphql/generated/schema";
+import { Customer, Order, useGetCustomerByIdQuery } from "../../graphql/generated/schema";
 import OmLoading from "../../components/elements/OmLoading";
 import OmAlert from "../../components/elements/OmAlert";
 import { Container } from "@mui/system";
-import { Grid, Typography } from "@mui/material";
-import CustomerForm from "./customerForms/CustomerForm";
+import { Grid } from "@mui/material";
+import CustomerForm from "./customerForm/CustomerForm";
+import OmHeader from "../../components/elements/OmHeader";
+import OrderLists from "../orders/orderdashboard/OrderList";
 
 export default function CustomerPage()
 {
@@ -29,26 +31,28 @@ export default function CustomerPage()
         return <OmAlert message='Could not retreiving customer data' />
     }
 
-    var customer = customerData.customers[0] as Customer
-
+    var customer = customerData.customers[0] as Customer;
+    var customerOrders = customer.orders as Order[];
+    console.log(customerOrders);
+    debugger;
+    
     return (
         <Container>
             <Grid container spacing={2}>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={8}>
-                    <Typography 
-                    component={'div'} 
-                    variant="h5"
-                    display={'block'}
-                    gutterBottom
-                    align="center">
-                        Customer Details
-                    </Typography>
+                    <OmHeader header='Customer Details' />
                 </Grid>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={12}>
                     <CustomerForm customer={customer} />
+                </Grid>
+                <Grid item xs={12}>
+                    <OmHeader header='Customer Orders' />
+                </Grid>
+                <Grid item xs={12}>
+                    <OrderLists orders={customerOrders} />
                 </Grid>
             </Grid>
         </Container>

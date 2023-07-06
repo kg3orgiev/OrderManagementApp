@@ -30,8 +30,6 @@ const FORM_VALIDATION = yup.object().shape({
 export default function CustomerForm({customer}:CustomerFormProps) {
     const [open, setOpen] = useState(false);
     const navigate = useNavigate()
-    
-    console.log(customer.address?.country);
 
     const INITIAL_FORM_STATE = {
         id: customer.id,
