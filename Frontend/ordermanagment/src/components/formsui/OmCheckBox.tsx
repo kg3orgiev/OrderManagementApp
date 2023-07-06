@@ -21,7 +21,6 @@ export default function OmCheckbox( {name, label, legend, otherProps}:OmCheckbox
         ...otherProps,
         ...field,
         checked: meta.value,
-        fullWidth : true,
         onChange : handleChange
     };
     const configFormControl: any = {};

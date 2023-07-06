@@ -49,7 +49,6 @@ export default function OrderForm({order}:OrderFormProps) {
     {
         console.log(values);
     }
-    console.log(Status);
     return (
         <Container>
             <div>
@@ -65,7 +64,7 @@ export default function OrderForm({order}:OrderFormProps) {
                             <Grid item xs={12}>
                                 <OmTextField name="descriptions" otherProps={{label:"Description"}} />
                             </Grid>
-                            <Grid item xs={12}>
+                             <Grid item xs={12}>
                                 <OmTextField name="otherNotes" otherProps={{label:"Other Notes"}} />
                             </Grid>
                             <Grid item xs={12}><Typography>Pricing Information</Typography> </Grid>
@@ -75,9 +74,9 @@ export default function OrderForm({order}:OrderFormProps) {
                             <Grid item xs={12}>
                                 <OmTextField name="depositAmount" otherProps={{label:"Deposit Amount"}} />
                             </Grid>
-                            <Grid item xs={12}>
+                           <Grid item xs={12}>
                                 <OmCheckbox name="isDelivery" label="Include Delivery"  legend="Include Delivery" otherProps={{label:"Delivery Included"}} />
-                            </Grid>
+                            </Grid> 
                             <Grid item xs={12}>
                                 <OmSubmitButton otherProps={{}} >
                                     {!order.id ? "Add New Order": "Update Order"}
