@@ -5,7 +5,7 @@ import OmAlert from "../../components/elements/OmAlert";
 import { Container } from "@mui/system";
 import { Grid } from "@mui/material";
 import OrderForm from "../orders/orderForm/OrderForm";
-import { Order, useGetOrderByIdQuery } from "../../graphql/generated/schema";
+import { Customer, Order, useGetOrderByIdQuery } from "../../graphql/generated/schema";
 import OmHeader from "../../components/elements/OmHeader";
 
 export default function OrderPage()
@@ -30,14 +30,15 @@ export default function OrderPage()
         return <OmAlert message='Could not retreiving order data' />
     }
 
-    var order = orderData.orders[0] as Order
+    var order = orderData.orders[0] as Order;
+    var customer = order.customer as Customer;
 
     return (
         <Container>
             <Grid container spacing={2}>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={8}>
-                    <OmHeader header='Order Details' />
+                    <OmHeader header={`Order Details - ${customer.firstName} ${customer.lastName}`} />
                 </Grid>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={2}></Grid>

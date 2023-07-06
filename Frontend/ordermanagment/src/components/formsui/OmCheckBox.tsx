@@ -22,7 +22,7 @@ export default function OmCheckbox( {name, label, legend, otherProps}:OmCheckbox
         ...field,
         checked: meta.value,
         fullWidth : true,
-        OnChange : handleChange
+        onChange : handleChange
     };
     const configFormControl: any = {};
     if(meta && meta.touched && meta.error)

@@ -19,7 +19,7 @@ export default function OmSubmitButton({children, otherProps} :OmSubmitButtonPro
         fullWidth : true,
         color: 'primary',
         variant : 'contained',
-        OnClick : handleSubmit
+        onClick : handleSubmit
     };
 
     return <Button {...configButton} endIcon={<SendIcon />}>{children}</Button>

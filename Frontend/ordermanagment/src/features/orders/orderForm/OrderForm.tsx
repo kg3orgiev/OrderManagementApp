@@ -26,7 +26,8 @@ const FORM_VALIDATION = yup.object().shape({
         .required("Deposit Amount is required"),
     otherNotes: yup.string(),
     totalAmount: yup.number()
-        .required("Total Amount is required")
+        .required("Total Amount is required"),
+    isDelivery :  yup.boolean()
 });
 export default function OrderForm({order}:OrderFormProps) {
     const [open, setOpen] = useState(false);

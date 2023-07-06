@@ -33,9 +33,6 @@ export default function CustomerPage()
 
     var customer = customerData.customers[0] as Customer;
     var customerOrders = customer.orders as Order[];
-    console.log(customerOrders);
-    debugger;
-    
     return (
         <Container>
             <Grid container spacing={2}>

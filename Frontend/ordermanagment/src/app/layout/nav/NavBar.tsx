@@ -19,18 +19,16 @@ export default function Navbar()
                                 display:{xs:'none',md:'flex'}
                             }
                         }>
-                            <Link to='/'>Order Management App</Link>
+                            <Link className="text-link" to='/'>OrderManagement</Link>
                         </Typography>
                         <Box sx={{flexGrow: 1, display: {xs:'none', md:'flex'}}} >
                             <Button key='Customers' 
                                 sx={{my: 2, color:'white' , display:'block'}}>
-                            <Link to='/customers'>Customers</Link>
+                            <Link className="text-link"  to='/customers'>Customers</Link>
                             </Button>
-                        </Box>
-                        <Box sx={{flexGrow: 1, display: {xs:'none', md:'flex'}}} >
-                             <Button key='Orders' 
+                            <Button key='Orders' 
                                 sx={{my: 2, color:'white' , display:'block'}}>
-                              <Link to='/orders'>Orders</Link>
+                              <Link className="text-link" to='/orders'>Orders</Link>
                             </Button>
                         </Box>
                     </Toolbar>
