@@ -17,7 +17,7 @@ export default function OrderLists({orders}: OrderListsProps) {
             cellRenderer: function(params: any){
                 const id = params.value;
                 return (
-                    <IconButton onClick={()=> window.open(`orders/${id}`,"_blank")}>
+                    <IconButton onClick={()=> window.open(`/orders/${id}`,"_blank")}>
                         <LunchIcon fontSize='small' color='secondary'></LunchIcon>
                     </IconButton>
                 );
