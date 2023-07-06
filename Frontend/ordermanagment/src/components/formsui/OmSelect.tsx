@@ -17,8 +17,8 @@ export default function OmSelect({name, options, otherProps} :OmSelectProps ) {
      }
  
      const configSelect = {
-         ...otherProps,
          ...field,
+         ...otherProps,
          select: true,
          fullWidth : true,
          variant : 'outlined',
@@ -36,7 +36,7 @@ export default function OmSelect({name, options, otherProps} :OmSelectProps ) {
             {Object.keys(options).map((item, pos)=>{
                 return (
                     <MenuItem key={pos} value={item}>
-                        {options[item]}
+                                      {options[item]}
                     </MenuItem>
                 )
             })}

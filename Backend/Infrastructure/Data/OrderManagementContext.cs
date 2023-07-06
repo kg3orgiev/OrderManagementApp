@@ -42,7 +42,7 @@ namespace Infrastructure.Data
                 AddressLine1 = "AddressLine1",
                 AddressLine2 = "AddressLine2",
                 City = "Sofia",
-                Country = "Bulgaria",
+                Country = "BG",
                 State = "Sf"
             },
             new Address{
@@ -51,7 +51,7 @@ namespace Infrastructure.Data
                 AddressLine1 = "AddressLine1",
                 AddressLine2 = "AddressLine2",
                 City = "London",
-                Country = "England",
+                Country = "EN",
                 State = "LN"
             });
 

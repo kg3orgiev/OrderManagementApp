@@ -1,6 +1,7 @@
 import { useFormikContext } from 'formik';
 import { Button } from '@mui/material';
-
+import SendIcon from '@mui/icons-material/Send';
+ 
 interface OmSubmitButtonProps {
   children: any,
   otherProps: any
@@ -17,10 +18,10 @@ export default function OmSubmitButton({children, otherProps} :OmSubmitButtonPro
         ...otherProps,
         fullWidth : true,
         color: 'primary',
-        variant : 'outlined',
+        variant : 'contained',
         OnClick : handleSubmit
     };
 
-    return <Button {...configButton}>{children}</Button>
+    return <Button {...configButton} endIcon={<SendIcon />}>{children}</Button>
 
 }

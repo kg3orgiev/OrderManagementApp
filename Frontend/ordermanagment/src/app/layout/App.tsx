@@ -5,6 +5,7 @@ import OrdersDashboard from '../../features/orders/orderdashboard/Orders.Dashboa
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './Layout';
 import HomePage from '../../features/home/HomePage';
+import CustomerPage from '../../features/customers/CustomerPage';
 
 
 const client = new ApolloClient({
@@ -22,6 +23,7 @@ function App() {
           <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="customers" element={<CustomerDashboard />} />
+          <Route path="customers/:customerId" element={<CustomerPage />} />
           <Route path="orders" element={<OrdersDashboard />} />
           </Route>
         </Routes>
