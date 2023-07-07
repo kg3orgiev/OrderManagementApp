@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Core.Entities;
+using Core.Enums;
 
 namespace Infrastructure.Data
 {
@@ -16,6 +17,7 @@ namespace Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
             modelBuilder.Entity<Customer>()
             .HasQueryFilter(c=> !c.IsDeleted)
             .HasData(new Customer{
@@ -66,7 +68,7 @@ namespace Infrastructure.Data
                 DepositAmount = 200,
                 IsDelivery = true,
                 IsDeleted = false,
-                Status = Core.Enums.Status.Pending,
+                Status = Status.PENDING,
                 OtherNotes = "Some Other Notes"
             },
               new Order{
@@ -78,7 +80,7 @@ namespace Infrastructure.Data
                 DepositAmount = 100,
                 IsDelivery = true,
                 IsDeleted = false,
-                Status = Core.Enums.Status.Pending,
+                Status = Status.PENDING,
                 OtherNotes = "Some Other Notes"
             });
 

@@ -8,7 +8,7 @@ import {Grid, Typography} from '@mui/material'
 import OmTextField from "../../../components/formsui/OmTextField";
 import OmSelect from "../../../components/formsui/OmSelect";
 import OmSubmitButton from "../../../components/formsui/OmSubmitButton";
-import Countries from "../../../data/countries.json";
+import statuses from "../../../data/statuses.json";
 import { formatDatePicker } from "../../../util/DateFormater";
 import OmDatePicker from "../../../components/formsui/OmDatePicker";
 import OmCheckbox from "../../../components/formsui/OmCheckBox";
@@ -56,7 +56,7 @@ export default function OrderForm({order}:OrderFormProps) {
                     <Form>
                         <Grid container spacing={2}>
                              <Grid item xs={12}>
-                                <OmSelect name="status" options={Status} otherProps={{label:"Order Status"}} />
+                                <OmSelect name="status" options={statuses} otherProps={{label:"Order Status"}} />
                              </Grid>
                             <Grid item xs={12}>
                                 <OmDatePicker name="orderDate" otherProps={{label:"Order Date"}} />
