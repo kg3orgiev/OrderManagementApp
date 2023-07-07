@@ -10,7 +10,7 @@ var MyAllowSpecificOrigins = "_allowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContextFactory<OrderManagementContext>(options=>
 {
-    options.UseInMemoryDatabase("InMemoryDb");
+    options.UseSqlite(builder.Configuration["ConnectionStrings:DefaultConnection"]);
 });
 builder.Services.AddCors(options =>
 {
@@ -45,7 +45,20 @@ app.Run();
 
 static void InitializeDatabase(IApplicationBuilder app)
 {
-    using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+
+        try
+        {
+            var scope = app.ApplicationServices.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<OrderManagementContext>();
+            context.Database.Migrate();
+        }
+        catch(Exception ex)
+        {
+            var logger = app.ApplicationServices.GetRequiredService<ILogger<Program>>();
+            logger.LogError(ex, "An error occured during migration");
+        }
+
+   /*  using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
     {
         var context = serviceScope.ServiceProvider.GetRequiredService<OrderManagementContext>();
         if (context.Database.EnsureCreated())
@@ -53,5 +66,5 @@ static void InitializeDatabase(IApplicationBuilder app)
               
             //add dummy data
         }
-    }
+    } */
 }
