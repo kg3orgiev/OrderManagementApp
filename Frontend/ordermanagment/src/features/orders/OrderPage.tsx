@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams,useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import OmLoading from "../../components/elements/OmLoading";
 import OmAlert from "../../components/elements/OmAlert";
 import { Container } from "@mui/system";
@@ -12,8 +12,8 @@ export default function OrderPage()
 {
     const params  = useParams();
     const orderId  = parseInt(params.orderId || '0');
-    const navigate = useNavigate();
     const [open,setOpen] = useState(false);
+    
     const { data:orderData, loading, error } = useGetOrderByIdQuery({
         variables:{
             id : orderId
@@ -32,13 +32,12 @@ export default function OrderPage()
 
     var order = orderData.orders[0] as Order;
     var customer = order.customer as Customer;
-
     return (
         <Container>
             <Grid container spacing={2}>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={8}>
-                    <OmHeader header={`Order Details - ${customer.firstName} ${customer.lastName}`} />
+                    <OmHeader header={`Order Details - ${customer?.firstName || ''} ${customer?.lastName || ''}`} />
                 </Grid>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={2}></Grid>

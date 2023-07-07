@@ -1,14 +1,15 @@
-import React, { useState } from "react";
-import { Customer } from "../../../graphql/generated/schema";
+import { useState } from "react";
+import { Customer, CustomerModelInput, useAddOrUpdateCustomerMutation } from "../../../graphql/generated/schema";
 import * as yup from 'yup'
 import { useNavigate } from "react-router-dom";
 import { Container } from "@mui/system";
 import { Form, Formik } from "formik";
-import {Grid, Typography} from '@mui/material'
+import {Alert, Grid, Snackbar, Typography} from '@mui/material'
 import OmTextField from "../../../components/formsui/OmTextField";
 import OmSelect from "../../../components/formsui/OmSelect";
 import OmSubmitButton from "../../../components/formsui/OmSubmitButton";
 import Countries from "../../../data/countries.json";
+import OmLoading from "../../../components/elements/OmLoading";
 
 interface CustomerFormProps{
     customer : Customer
@@ -43,14 +44,58 @@ export default function CustomerForm({customer}:CustomerFormProps) {
         country : customer.address?.country || '',
         state : customer.address?.state || '',
     }
+    const [addOrUpdateCustomer,
+        { loading: addOrUpdateCustomerLoading,
+             error: addOrUpdateCustomerError}
+         ] = useAddOrUpdateCustomerMutation();
 
-    function addOrUpdateCustomerDetails(values : any)
+    const handleClose = (event:any) =>
     {
-        console.log(values);
+        if(event?.reason === 'clickaway')
+        {
+            return;
+        }
+
+        setOpen(false);
+    }
+
+    async function addOrUpdateCustomerDetails(value : CustomerModelInput)
+    {
+       const response = await addOrUpdateCustomer({
+        variables:{
+            customer : value
+        }
+       });
+       setOpen(true);
+
+       const customer = response.data?.addOrUpdateCustomer as Customer;
+
+       if(customer.id)
+       {
+          navigate(`/customers/${customer.id}`);
+       }
+    }
+
+    if(addOrUpdateCustomerLoading)
+    {
+        return <OmLoading />;
+    }
+    if(addOrUpdateCustomerError)
+    {
+        return (
+            <Snackbar open={true} autoHideDuration={6000} >
+                <Alert severity="error">Error retreiving customer data </Alert>
+            </Snackbar>
+        );
     }
 
     return (
         <Container>
+             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} >
+                <Alert severity="success" onClose={handleClose} sx={{width:'100%'}}>
+                    {!customer.id ? "Customer details successfully added":  "Customer details successfully updated"}
+                </Alert>
+            </Snackbar>
             <div>
                 <Formik initialValues={INITIAL_FORM_STATE} validationSchema={FORM_VALIDATION}  onSubmit={addOrUpdateCustomerDetails}>
                     <Form>

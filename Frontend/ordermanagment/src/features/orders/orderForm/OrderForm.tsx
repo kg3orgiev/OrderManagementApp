@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Order, Status } from "../../../graphql/generated/schema";
+import { Order, Status, OrderModelInput, useAddOrUpdateOrderMutation } from "../../../graphql/generated/schema";
 import * as yup from 'yup'
 import { useNavigate } from "react-router-dom";
 import { Container } from "@mui/system";
 import { Form, Formik } from "formik";
-import {Grid, Typography} from '@mui/material'
+import {Alert, Grid, Snackbar, Typography} from '@mui/material'
 import OmTextField from "../../../components/formsui/OmTextField";
 import OmSelect from "../../../components/formsui/OmSelect";
 import OmSubmitButton from "../../../components/formsui/OmSubmitButton";
@@ -12,6 +12,7 @@ import statuses from "../../../data/statuses.json";
 import { formatDatePicker } from "../../../util/DateFormater";
 import OmDatePicker from "../../../components/formsui/OmDatePicker";
 import OmCheckbox from "../../../components/formsui/OmCheckBox";
+import OmLoading from "../../../components/elements/OmLoading";
 
 interface OrderFormProps{
     order : Order
@@ -46,13 +47,56 @@ export default function OrderForm({order}:OrderFormProps) {
         status: order.status || Status.Draft
     } 
  
-    function addOrUpdatOrderDetails(values : any)
+    const [addOrUpdateOrder,
+        { loading: addOrUpdateOrderLoading,
+             error: addOrUpdateOrderError}
+         ] = useAddOrUpdateOrderMutation();
+
+    const handleClose = (event:any) =>
     {
-        console.log(values);
+        if(event?.reason === 'clickaway')
+        {
+            return;
+        }
+
+        setOpen(false);
+    }
+
+    async function addOrUpdatOrderDetails(value : OrderModelInput)
+    {
+        const response = await addOrUpdateOrder({
+            variables:{
+                order : value
+            }
+           });
+           setOpen(false);
+           const order = response.data?.addOrUpdateOrder as Order;
+    
+           if(order.id)
+           {
+              navigate(`/orders/${order.id}`);
+           }
+    }
+    if(addOrUpdateOrderLoading)
+    {
+        return <OmLoading />;
+    }
+    if(addOrUpdateOrderError)
+    {
+        return (
+            <Snackbar open={true} autoHideDuration={6000} >
+                <Alert severity="error">Error retreiving customer data </Alert>
+            </Snackbar>
+        );
     }
 
     return (
         <Container>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} >
+                <Alert severity="success" onClose={handleClose} sx={{width:'100%'}}>
+                    {!order.id ? "Order details successfully added":  "Order details successfully updated"}
+                </Alert>
+            </Snackbar>
             <div>
                 <Formik initialValues={INITIAL_FORM_STATE} validationSchema={FORM_VALIDATION} onSubmit={addOrUpdatOrderDetails}>
                     <Form>
@@ -75,10 +119,10 @@ export default function OrderForm({order}:OrderFormProps) {
                             </Grid>
                             <Grid item xs={12}><Typography>Pricing Information</Typography> </Grid>
                             <Grid item xs={12}>
-                                <OmTextField name="totalAmount" otherProps={{label:"Total Amount"}} />
+                                <OmTextField name="totalAmount" otherProps={{label:"Total Amount", type:"number"}} />
                             </Grid>
                             <Grid item xs={12}>
-                                <OmTextField name="depositAmount" otherProps={{label:"Deposit Amount"}} />
+                                <OmTextField name="depositAmount" otherProps={{label:"Deposit Amount",type:"number"}} />
                             </Grid>
                            <Grid item xs={12}>
                                 <OmCheckbox name="isDelivery" label="Include Delivery"  legend="Include Delivery" otherProps={{label:"Delivery Included"}} />

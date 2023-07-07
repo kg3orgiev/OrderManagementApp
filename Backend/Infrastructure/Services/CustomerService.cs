@@ -37,7 +37,7 @@ namespace Infrastructure.Services
             }
             else
             {
-                customer = await _context.Customers.Include(i=>i.Address).SingleAsync(x => x.Id == customerModel.Id);
+                customer = await _context.Customers.SingleAsync(x => x.Id == customerModel.Id);
                 customer.FirstName = customerModel.FirstName;
                 customer.LastName = customerModel.LastName;
                 customer.Email = customerModel.Email;
@@ -55,7 +55,6 @@ namespace Infrastructure.Services
             }
 
              await _context.SaveChangesAsync();
-
              return customer; 
         }
     }

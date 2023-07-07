@@ -34,7 +34,7 @@ namespace Infrastructure.Services
             }
             else
             {
-                order = await _context.Orders.SingleAsync(x => x.Id == orderModel.Id);
+                order = await _context.Orders.Include(x=>x.Customer).SingleAsync(x => x.Id == orderModel.Id);
                 order.OrderDate = orderModel.OrderDate;
                 order.CustomerId = orderModel.CustomerId;
                 order.DepositAmount= orderModel.DepositAmount;
