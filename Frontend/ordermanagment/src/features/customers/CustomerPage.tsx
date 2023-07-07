@@ -4,7 +4,7 @@ import { Customer, Order, useGetCustomerByIdQuery } from "../../graphql/generate
 import OmLoading from "../../components/elements/OmLoading";
 import OmAlert from "../../components/elements/OmAlert";
 import { Container } from "@mui/system";
-import { Grid } from "@mui/material";
+import { Grid, Button } from "@mui/material";
 import CustomerForm from "./customerForm/CustomerForm";
 import OmHeader from "../../components/elements/OmHeader";
 import OrderLists from "../orders/orderdashboard/OrderList";
@@ -50,6 +50,11 @@ export default function CustomerPage()
                 </Grid>
                 <Grid item xs={12}>
                     <OrderLists orders={customerOrders} />
+                </Grid>
+                <Grid item xs={12}>
+                    <Button variant="contained" fullWidth={true} href={`/customers/${customer.id}/neworder`}>
+                       Add New Order
+                    </Button>
                 </Grid>
             </Grid>
         </Container>
