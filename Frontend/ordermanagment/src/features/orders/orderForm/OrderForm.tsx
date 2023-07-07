@@ -50,6 +50,7 @@ export default function OrderForm({order}:OrderFormProps) {
     {
         console.log(values);
     }
+
     return (
         <Container>
             <div>
@@ -66,7 +67,11 @@ export default function OrderForm({order}:OrderFormProps) {
                                 <OmTextField name="descriptions" otherProps={{label:"Description"}} />
                             </Grid>
                              <Grid item xs={12}>
-                                <OmTextField name="otherNotes" otherProps={{label:"Other Notes"}} />
+                                <OmTextField name="otherNotes" otherProps={{
+                                        label:"Other Notes",
+                                        multiline: true,
+                                        rows:4
+                                    }} />
                             </Grid>
                             <Grid item xs={12}><Typography>Pricing Information</Typography> </Grid>
                             <Grid item xs={12}>

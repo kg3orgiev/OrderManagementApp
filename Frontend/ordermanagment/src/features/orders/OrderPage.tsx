@@ -28,7 +28,7 @@ export default function OrderPage()
     if(error || !orderData || !orderData.orders)
     {
         return <OmAlert message='Could not retreiving order data' />
-    }
+    }  
 
     var order = orderData.orders[0] as Order;
     var customer = order.customer as Customer;
