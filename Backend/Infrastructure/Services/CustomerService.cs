@@ -57,5 +57,25 @@ namespace Infrastructure.Services
              await _context.SaveChangesAsync();
              return customer; 
         }
+
+        public async Task<bool> DeleteCustomerAsync(int customerId)
+        {
+            var customer = await _context.Customers.SingleAsync(x => x.Id == customerId);
+            customer.IsDeleted = true;
+
+            var orders = await _context.Orders
+                    .Where(x => x.CustomerId == customer.Id)
+                    .ToListAsync();
+            
+            foreach (var order in orders)
+            {
+                order.IsDeleted = true;
+            }
+
+            _context.Customers.Update(customer);
+            _context.Orders.UpdateRange(orders);
+            
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }

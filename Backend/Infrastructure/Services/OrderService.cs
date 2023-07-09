@@ -51,5 +51,15 @@ namespace Infrastructure.Services
 
           return order;
         }
+
+          public async Task<bool> DeleteOrderAsync(int orderId)
+        {
+            var order = await _context.Orders.SingleAsync(x => x.Id == orderId);
+            order.IsDeleted = true;
+
+            _context.Orders.Update(order);
+            
+            return  await _context.SaveChangesAsync() > 0;
+        }
     }
 }

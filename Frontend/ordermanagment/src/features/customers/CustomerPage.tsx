@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useParams,useNavigate } from "react-router-dom";
-import { Customer, Order, useGetCustomerByIdQuery } from "../../graphql/generated/schema";
+import { Customer, Order, useGetCustomerByIdQuery, useDeleteCustomerMutation } from "../../graphql/generated/schema";
 import OmLoading from "../../components/elements/OmLoading";
 import OmAlert from "../../components/elements/OmAlert";
 import { Container } from "@mui/system";
-import { Grid, Button } from "@mui/material";
+import { Grid, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
 import CustomerForm from "./customerForm/CustomerForm";
 import OmHeader from "../../components/elements/OmHeader";
 import OrderLists from "../orders/orderdashboard/OrderList";
+import { Delete } from '@mui/icons-material';
 
 export default function CustomerPage()
 {
@@ -21,7 +22,31 @@ export default function CustomerPage()
         }
     });
 
-    if(loading)
+    const [deleteCustomer, {loading : deleteCustomerLoading, error: deleteCustomerError} ]  = useDeleteCustomerMutation();
+
+    async function deleteCustomerDetails() {
+        const response = await deleteCustomer({
+            variables:{
+                id:customerId
+            }
+        });
+
+        if(!response.errors)
+        {
+            navigate('/customers');
+        }
+    } 
+
+    function handleClickOpen()
+    {
+       setOpen(true);  
+    }
+    function handleClose()
+    {
+       setOpen(false);  
+    }
+
+    if(loading || deleteCustomerLoading)
     {
         return <OmLoading />
     }
@@ -31,16 +56,39 @@ export default function CustomerPage()
         return <OmAlert message='Could not retreiving customer data' />
     }
 
+    if(deleteCustomerError)
+    {
+        return <OmAlert message='Error deleting customer' />
+    }
+
     var customer = customerData.customers[0] as Customer;
     var customerOrders = customer.orders as Order[];
     return (
         <Container>
+            <Dialog open={open} onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-aria-describedby="alert-dialog-description">
+                    <DialogTitle id='alert-dialog-title'>{"Delete Customer Details"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id='alert-dialog-description'>
+                            You are about to remove this customer and all realted orders. Confrim to continue or cancel!
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose}>Cancel</Button>
+                        <Button onClick={deleteCustomerDetails} color="error" autoFocus>Delete</Button>
+                    </DialogActions>
+            </Dialog>
             <Grid container spacing={2}>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={8}>
                     <OmHeader header='Customer Details' />
                 </Grid>
-                <Grid item xs={2}></Grid>
+                <Grid item xs={2}>
+                     <Button variant="outlined" color="error" startIcon={<Delete />} onClick={handleClickOpen}>
+                       Delete Customer
+                    </Button>
+                </Grid>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={12}>
                     <CustomerForm customer={customer} />
