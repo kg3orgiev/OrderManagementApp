@@ -9,6 +9,7 @@ import CustomerForm from "./customerForm/CustomerForm";
 import OmHeader from "../../components/elements/OmHeader";
 import OrderLists from "../orders/orderdashboard/OrderList";
 import { Delete } from '@mui/icons-material';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 export default function CustomerPage()
 {
@@ -85,24 +86,26 @@ export default function CustomerPage()
                     <OmHeader header='Customer Details' />
                 </Grid>
                 <Grid item xs={2}>
-                     <Button variant="outlined" color="error" startIcon={<Delete />} onClick={handleClickOpen}>
-                       Delete Customer
+                     <Button variant="outlined" size="medium" color="error" startIcon={<Delete />} onClick={handleClickOpen}>
+                       Customer
                     </Button>
                 </Grid>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={12}>
                     <CustomerForm customer={customer} />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={2}>
+                </Grid>
+                <Grid item xs={8}>
                     <OmHeader header='Customer Orders' />
+                </Grid>
+                <Grid item xs={2}>
+                <Button variant="contained" size="medium" href={`/customers/${customer.id}/neworder`} startIcon={<AddBoxIcon />}>
+                       New Order
+                </Button>
                 </Grid>
                 <Grid item xs={12}>
                     <OrderLists orders={customerOrders} />
-                </Grid>
-                <Grid item xs={12}>
-                    <Button variant="contained" fullWidth={true} href={`/customers/${customer.id}/neworder`}>
-                       Add New Order
-                    </Button>
                 </Grid>
             </Grid>
         </Container>

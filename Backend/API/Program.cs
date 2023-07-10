@@ -26,6 +26,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IStatusService, StatusService>();
 
 builder.Services
     .AddGraphQLServer()
