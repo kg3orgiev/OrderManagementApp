@@ -22,12 +22,12 @@ export default function OrdersDashboard() {
 
     return (
         <Grid container spacing={2} >
-            <Grid item xs={11}>
+            <Grid item xs={12}>
                 <Typography align='center' gutterBottom display={'block'} variant='h5' component={'div'} >
                  Orders List
                 </Typography>
             </Grid>
-            <Grid item xs={11}>
+            <Grid item xs={12}>
                 <OrderLists orders={orders} />
             </Grid>
         </Grid>
