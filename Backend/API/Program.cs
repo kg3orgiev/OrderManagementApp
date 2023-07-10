@@ -35,13 +35,22 @@ builder.Services
     .AddProjections()
     .AddFiltering();
 
+builder.Services.AddMvc(opt=>opt.EnableEndpointRouting = false);
+
 var app = builder.Build();
+app.UseRouting();
+app.UseMvc();
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 InitializeDatabase(app);
 
 app.UseCors(MyAllowSpecificOrigins);
 app.MapGraphQL();
 app.UseGraphQLVoyager("/graphql-voyager", new VoyagerOptions { GraphQLEndPoint = "/graphql"});
+
+app.UseEndpoints(endpoints => endpoints.MapFallbackToController("Index", "Website"));
+
 app.Run();
 
 
