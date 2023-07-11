@@ -10,7 +10,7 @@ var MyAllowSpecificOrigins = "_allowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContextFactory<OrderManagementContext>(options=>
 {
-    options.UseSqlite(builder.Configuration["ConnectionStrings:DefaultConnection"]);
+    options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]);
 });
 builder.Services.AddCors(options =>
 {
