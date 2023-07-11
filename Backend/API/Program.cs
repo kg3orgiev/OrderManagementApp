@@ -68,14 +68,4 @@ static void InitializeDatabase(IApplicationBuilder app)
             var logger = app.ApplicationServices.GetRequiredService<ILogger<Program>>();
             logger.LogError(ex, "An error occured during migration");
         }
-
-   /*  using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-    {
-        var context = serviceScope.ServiceProvider.GetRequiredService<OrderManagementContext>();
-        if (context.Database.EnsureCreated())
-        {
-              
-            //add dummy data
-        }
-    } */
 }

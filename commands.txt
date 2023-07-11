@@ -1,0 +1,29 @@
+за да добавим SQL Instance 
+docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=sa_password!123456' -p 1601:1433 --name local-sql -d mcr.microsoft.com/mssql/server:2019-CU11-ubuntu-20.04
+
+127.0.0.1, 1601
+SA
+sa_password!123456
+
+
+булдва Image от докер файл
+docker build -t kgeorgiev86/ordermanagementapp .
+
+ако се направи промяна по be или Fe ъпдейтв image и трябва build след това
+docker push kgeorgiev86/ordermanagementapp:latest
+
+docker run --rm -it -p 8080:80 kgeorgiev86/ordermanagementapp --name local-be
+
+it - mode за гледане на грешки
+rm - да трие containre-a при спиране
+
+docker run -p 8080:80 --name local-be --link local-sql kgeorgiev86/ordermanagementapp -e "ConnectionStrings:DefaultConnection=data source=host.docker.internal,1601;initial catalog=Oma;user id=SA;Password=sa_password!123456;TrustServerCertificate=true" -d 
+
+
+Примерно от SQLite към SQLServer
+При смяна на ДБ-зи трябва да се тгрия миграциите и да се пуснат нови
+dotnet ef migrations add InitialCreate -p .\Infrastructure\ -s .\API\
+
+
+Find IP Container
+docker inspect -f '{{.NetworkSettings.Networks.[Network].IPAddress}}' [Container-name]   
